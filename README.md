@@ -19,7 +19,7 @@ If you'd like to have either or both the client and the API in your project, use
         <repository>
             <id>git-parabot</id>
             <name>Parabot's Git based repo</name>
-            <url>https://github.com/parabot/Maven-Repository/raw/master/</url>
+            <url>https://maven.parabot.org/</url>
         </repository>
     </repositories>
 
