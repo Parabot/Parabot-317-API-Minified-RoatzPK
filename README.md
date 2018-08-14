@@ -27,12 +27,12 @@ If you'd like to have either or both the client and the API in your project, use
         <dependency>
             <groupId>org.parabot</groupId>
             <artifactId>client</artifactId>
-            <version>2.2</version>
+            <version>2.6.6.5</version>
         </dependency>
         <dependency>
             <groupId>org.parabot</groupId>
-            <artifactId>317provider</artifactId>
-            <version>1.0</version>
+            <artifactId>317-api-minified</artifactId>
+            <version>1.21.3</version>
         </dependency>
     </dependencies>
 ```
