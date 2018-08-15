@@ -7,6 +7,8 @@ import org.parabot.core.asm.ASMClassLoader;
 import org.parabot.core.asm.adapters.AddInterfaceAdapter;
 import org.parabot.core.asm.hooks.HookFile;
 import org.parabot.core.desc.ServerProviderInfo;
+import org.parabot.core.reflect.RefField;
+import org.parabot.core.ui.components.GamePanel;
 import org.parabot.core.ui.components.VerboseLoader;
 import org.parabot.environment.api.utils.WebUtil;
 import org.parabot.environment.scripts.Script;
@@ -19,7 +21,10 @@ import org.rev317.min.ui.BotMenu;
 
 import javax.swing.*;
 import java.applet.Applet;
+import java.awt.*;
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.net.URL;
 
 /**
@@ -39,7 +44,25 @@ public class Loader extends ServerProvider {
             final Context        context     = Context.getInstance();
             final ASMClassLoader classLoader = context.getASMClassLoader();
             final Class<?>       clientClass = classLoader.loadClass(Context.getInstance().getServerProviderInfo().getClientClass());
-            Object               instance    = clientClass.newInstance();
+
+            Object instance = clientClass.newInstance();
+
+            Field field = instance.getClass().getSuperclass().getDeclaredField("Y");
+            field.setAccessible(true);
+
+            Class<?>       frameClass    = classLoader.loadClass("com.b.a.E");
+            Constructor<?> s             = frameClass.getConstructors()[0];
+            s.setAccessible(true);
+            Frame         frameInstance = (Frame) s.newInstance(instance, 500, 500, false, false);
+
+            Field field2 = instance.getClass().getSuperclass().getDeclaredField("ai");
+
+            RefField x = new RefField(field2, instance);
+            x.setBoolean(true);
+
+            System.out.println(instance.getClass().getSuperclass().getDeclaredField("ai").get(instance));
+
+            field.set(instance, frameInstance);
 
             return (Applet) instance;
         } catch (Exception e) {
