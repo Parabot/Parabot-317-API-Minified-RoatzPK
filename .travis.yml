@@ -21,7 +21,7 @@ after_deploy: "./.travis/call-creation.sh"
 notifications:
   email: false
   slack:
-    secure: RLntqWb6Ude1cBZx3YUajM2e8keWr26By7H+k+r3PkeyrLWwlAPDClGoc7Z6MViwY4AVACdNq/q4+D2tZ672L/gjb/DJBUiIOKp0onsD0s8icmmkWaNKjxidKtcQ1pKO1JpMMfgh53nkqkXOlWI0rHd7WK3n/UzIkl9qIS1vYXXW6VCG+3Mowkwkv04HEAitUY0fvxUrhmyJjYakn5obRCERBd1k2I4zBshc4YRnaTc/eTt1R54WErNXMqkZhlhATNTLEmct4v1JZFWDKXtMv9mtv9bKiTKtFemyS7nGkdZG9lk3mYHeNg7bcZsdNn7iMtUeKsEPjJCuHzl63TzN6lmhPUDHr9Rhak4svKkFnk4nyrRDqw7HnmnEDKt2w3u+hx84mueJoMVaI8IjMTqALGmqAXlm5/NsXlNL1PXtzFVs0UV24IOvTLavGYasYMxBbk3PDC/8FSzS++uhw4DUJK0mdGE3mwtJsQdo5QNRVQKY8g4EXNdzsN4s4DMjI4iO5Zp/XaWOpe6+bGf630McbPsOAX5c0ISZViO2FVkfFOLIWNsXQy+sIQms3XgmQlRXljEpyHVsE13rhqdKNXaFbwXWYUX1+64Sg42ZmgbNBgKwX1p+hpe+u/asPhIGP3guFaLNCH2tlwb8ZxTzZXWnToZi6AUC0kYvVInH/9TEXMI=
+    secure: uTkEvscGsgyi9iFjJW+2lAsjonKdCJoHemvVORKX7c/awjjhIpoqWFjsWClut0hYLTeoTBYKsZR6ZPJ7uRHG5oawlwW+LNz3paRGICGJGzD9L5cGGsRGEznAXPnRDlen1Aii5xcTHS3EGaZwZwwmns6K/hhjG7kYuD5X3XGCtd4+EC52O7zf3ZB3FAUC3FBHayMidAYzrDEqWG9R+3sziKadADX+PIREFYqZcBE4xZUtza0MV2O6PJ/DZmpR/qC7socaxOEUTLC6fEmPaEiQyjKshcUFw0V9oOYyw5ysNTEf6dwEM4AT2DzydVsMB8PxE+o50i2X8McajxYmsDZbu2UsyxXsNI7lur4Ob2ET7tXWjr0Kn3ZPFQ7yEFML29HOQfNdPp1rj9kebncGf0Rghu6mhuVcjDPEABMKKtVUBjCrQkyKgUNNiXC3BphMiFL6gkCcLnBVbDHkv751R+5tAwalgEiOUVolCkz0UJjuYq87VO1fJhQGls5FLPbmnLJ2Zc+3D2pnUq6RZ3aI4TTv7FhIrk9qybv4Xox6kTmTvKqEDP89APg23dualkeZh/aKgDCkEkwbJTHU3dmYvbRsekpjGg88BbwRIR1591wpAs2gyLRZ0Dy5uTYrMo8IhWS+XNduFEsEOcOgm64xNj24MevV0Sgn6DdpjUt6jtL09ho=
   webhooks:
     on_success: always
     on_failure: always
@@ -40,16 +40,16 @@ deploy:
   - provider: s3
     access_key_id: AKIAJDZLZNH2PIKHUKOA
     secret_access_key:
-      secure: aGFNOrQ/VZScEqGcRr7NOP1CP9etGbAUvesgpoTVDiT59PknJKdCo7TDDzAfKlBHcHxuiBNaHkkmuj6pRkWff3Ffsb00VP6k04LGu+strzWThk1woTYx+3I7bcEa1U45Gfo/Y6xtOI1gSE3IHLeOX80ebfioR7jrKBtmE5pgbOG0jySco7KIftmct72zsHG/Ema8rmQEVpPxKh0FLRcddQIJ3i6/1DdRYkCtjqL5m9B4igIeio9qw8GiiM1pG/RCn3VX/MOKGa675q/U9x0G8Oc36EaEKTW0Vws3yVxZiKSBBT5akmeUwzODRBGA5z/9s23XQJmjDOnTjX/M7v8AKwkVfsti98lxBmfHeGxVJSI2ofx25Re8yjkPX6u+tRrN8L4W5NVc5qYPJwldYzXuYGMfuPKpwD5EDloM+PkSAMA56YxA+0VOZRxyFA0wvc+CoacIKPHSVBXz8dU3WhtCfhBdDt+XXsq0U2rBa5jqqYGxNoN74EyU+C2mXpPP7nsVfbeOO1FohJgWeH3pa4K0xOjg4HY7rIcrwvPjCArDRh/AXIWQzXnhRRtcHdG37pTsfP0SGL8QX4SutFFpvfgqwbkEkKuIpkt1cLaD3tgLSfUp4xmSA2Jef0bP3OKEpK6+JUyniWxXuw23boAODKfy4WmhdUpfiIKJTu7VBq6lAMU=
+      secure: YaCyLv4zN2Z0Myhv0/TbOIBD+BqOHNr52bFL0W9WwPiOssEZKlTVoqaNyMh0U2qo84W+Wj6l7BrqF5+Oytfnytu4cBYhzjdqZAW+iLIJTs4TPEWbcJTcz5dYyVeV6uPY9wtP1EVY/2eQPrFQkm/Xq8jx15pqfcCnAGrIt0PyTzpSsMCQsQVvO8kh5HQXK4RWUm3SQ5AOyFXUQVx+EvNthd76JlqwJyhyp6xTH9VU+FVfmfWhi/mHl3dIryOiMcdVn9wHks87YGzbF1180R9VI3TFR2+owbK3mMdvqzdGa/NooTGlQ+d81Wdgqt+Gce4eUpGtGmoGbzP7I6u/cBubsj2gMEz/0duhv0r6R3ddO5yWksf+ltnP2MYlcbDqSGpDhtdy2dHCrMGMUS7YioEciPNpbk66v/AYDXch98x5KjyaTx6wYXgqYz7tChRe3tFt7Wo+nhcYQJpzKCeeomf/iTKe4jfBeeolqqEKHSY6L5V7nvnDMO66/m3XeuRtl/5ZHqy8zbXhkqM2I2lqn+1T01gk7RphkOZZg0He5bVE0KCnwoF1TuNchPHOKf84yh2LXfxHM/huZIpZk2ig6YFRFbWBGKwUL0tyxHtctx+yWLwi1mqsC1o7c2sdkBFhdoxxxgA0sBZr8UBET3byegHqEZGDJdJv9dP53RCX0qKQscs=
     bucket: parabot
     skip_cleanup: true
     local-dir: "./target/final/"
-    upload-dir: artifacts/dreamscape-provider
+    upload-dir: artifacts/roatzpk-provider
     region: us-west-1
     detect_encoding: true
     acl: public_read
     on:
-      repo: Parabot/Parabot-317-API-Minified-Dreamscape
+      repo: Parabot/Parabot-317-API-Minified-RoatzPK
       branch:
         - master
         - development
