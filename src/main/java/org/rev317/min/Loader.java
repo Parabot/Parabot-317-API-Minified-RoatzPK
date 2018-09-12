@@ -1,5 +1,6 @@
 package org.rev317.min;
 
+import java.awt.event.*;
 import org.parabot.core.Context;
 import org.parabot.core.Core;
 import org.parabot.core.Directories;
@@ -7,7 +8,9 @@ import org.parabot.core.asm.ASMClassLoader;
 import org.parabot.core.asm.adapters.AddInterfaceAdapter;
 import org.parabot.core.asm.hooks.HookFile;
 import org.parabot.core.desc.ServerProviderInfo;
+import org.parabot.core.reflect.RefClass;
 import org.parabot.core.reflect.RefField;
+import org.parabot.core.reflect.RefMethod;
 import org.parabot.core.ui.components.GamePanel;
 import org.parabot.core.ui.components.VerboseLoader;
 import org.parabot.environment.api.utils.WebUtil;
@@ -53,7 +56,7 @@ public class Loader extends ServerProvider {
             Class<?>       frameClass    = classLoader.loadClass("com.b.a.E");
             Constructor<?> s             = frameClass.getConstructors()[0];
             s.setAccessible(true);
-            Frame         frameInstance = (Frame) s.newInstance(instance, 500, 500, false, false);
+            Frame         frameInstance = (Frame) s.newInstance(instance, 765, 503, false, false);
 
             Field field2 = instance.getClass().getSuperclass().getDeclaredField("ai");
 
@@ -124,5 +127,43 @@ public class Loader extends ServerProvider {
 
     @Override
     public void init() {
+    }
+
+    @Override
+    public void preAppletInit() {
+
+    }
+
+    @Override
+    public void postAppletStart() {
+
+        GamePanel panel = GamePanel.getInstance();
+        Applet applet = (Applet) Context.getInstance().getClient();
+        try {
+            RefClass appletClass = new RefClass(Context.getInstance().getASMClassLoader().loadClass("com.b.a.B"), applet);
+            final RefField frameField = appletClass.getField("Y"); // frame
+            RefField graphicsField = appletClass.getField("X");
+            RefField useApplet = appletClass.getField("ai");
+            useApplet.setBoolean(true);
+           // System.out.println("check: "+useApplet.asBoolean());
+            Frame frame = (Frame) frameField.asObject();
+            frame.dispose();
+            frameField.set(null);
+            RefMethod componentMethod = appletClass.getMethod("o");
+            Component component = (Component) componentMethod.invoke();
+            //System.out.println("component: "+component);
+            panel.add(component);
+            applet.repaint();
+            applet.paintAll(applet.getGraphics());
+            graphicsField.set(applet.getGraphics());
+            component.addMouseListener((MouseListener)applet);
+            component.addMouseMotionListener((MouseMotionListener)applet);
+            component.addKeyListener((KeyListener)applet);
+            component.addFocusListener((FocusListener)applet);
+            component.addMouseWheelListener((MouseWheelListener)applet);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        panel.validate();
     }
 }
