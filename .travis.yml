@@ -1,0 +1,56 @@
+language: java
+
+dist: trusty
+
+jdk:
+  - openjdk7
+  - oraclejdk8
+
+before_install:
+  - chmod +x ./.travis/maven-build.sh
+  - chmod +x ./.travis/call-creation.sh
+  - mvn clean
+
+install:
+  - sudo apt-get update && sudo apt-get --assume-yes install zip unzip
+
+script: "./.travis/maven-build.sh"
+
+after_deploy: "./.travis/call-creation.sh"
+
+notifications:
+  email: false
+  slack:
+    secure: uTkEvscGsgyi9iFjJW+2lAsjonKdCJoHemvVORKX7c/awjjhIpoqWFjsWClut0hYLTeoTBYKsZR6ZPJ7uRHG5oawlwW+LNz3paRGICGJGzD9L5cGGsRGEznAXPnRDlen1Aii5xcTHS3EGaZwZwwmns6K/hhjG7kYuD5X3XGCtd4+EC52O7zf3ZB3FAUC3FBHayMidAYzrDEqWG9R+3sziKadADX+PIREFYqZcBE4xZUtza0MV2O6PJ/DZmpR/qC7socaxOEUTLC6fEmPaEiQyjKshcUFw0V9oOYyw5ysNTEf6dwEM4AT2DzydVsMB8PxE+o50i2X8McajxYmsDZbu2UsyxXsNI7lur4Ob2ET7tXWjr0Kn3ZPFQ7yEFML29HOQfNdPp1rj9kebncGf0Rghu6mhuVcjDPEABMKKtVUBjCrQkyKgUNNiXC3BphMiFL6gkCcLnBVbDHkv751R+5tAwalgEiOUVolCkz0UJjuYq87VO1fJhQGls5FLPbmnLJ2Zc+3D2pnUq6RZ3aI4TTv7FhIrk9qybv4Xox6kTmTvKqEDP89APg23dualkeZh/aKgDCkEkwbJTHU3dmYvbRsekpjGg88BbwRIR1591wpAs2gyLRZ0Dy5uTYrMo8IhWS+XNduFEsEOcOgm64xNj24MevV0Sgn6DdpjUt6jtL09ho=
+  webhooks:
+    on_success: always
+    on_failure: always
+    on_start: never
+
+env:
+  global:
+    - PROVIDER_VERSION=2.0.1
+
+cache:
+  directories:
+    - ".autoconf"
+    - "$HOME/.m2"
+
+deploy:
+  - provider: s3
+    access_key_id: AKIAJDZLZNH2PIKHUKOA
+    secret_access_key:
+      secure: YaCyLv4zN2Z0Myhv0/TbOIBD+BqOHNr52bFL0W9WwPiOssEZKlTVoqaNyMh0U2qo84W+Wj6l7BrqF5+Oytfnytu4cBYhzjdqZAW+iLIJTs4TPEWbcJTcz5dYyVeV6uPY9wtP1EVY/2eQPrFQkm/Xq8jx15pqfcCnAGrIt0PyTzpSsMCQsQVvO8kh5HQXK4RWUm3SQ5AOyFXUQVx+EvNthd76JlqwJyhyp6xTH9VU+FVfmfWhi/mHl3dIryOiMcdVn9wHks87YGzbF1180R9VI3TFR2+owbK3mMdvqzdGa/NooTGlQ+d81Wdgqt+Gce4eUpGtGmoGbzP7I6u/cBubsj2gMEz/0duhv0r6R3ddO5yWksf+ltnP2MYlcbDqSGpDhtdy2dHCrMGMUS7YioEciPNpbk66v/AYDXch98x5KjyaTx6wYXgqYz7tChRe3tFt7Wo+nhcYQJpzKCeeomf/iTKe4jfBeeolqqEKHSY6L5V7nvnDMO66/m3XeuRtl/5ZHqy8zbXhkqM2I2lqn+1T01gk7RphkOZZg0He5bVE0KCnwoF1TuNchPHOKf84yh2LXfxHM/huZIpZk2ig6YFRFbWBGKwUL0tyxHtctx+yWLwi1mqsC1o7c2sdkBFhdoxxxgA0sBZr8UBET3byegHqEZGDJdJv9dP53RCX0qKQscs=
+    bucket: parabot
+    skip_cleanup: true
+    local-dir: "./target/final/"
+    upload-dir: artifacts/roatzpk-provider
+    region: us-west-1
+    detect_encoding: true
+    acl: public_read
+    on:
+      repo: Parabot/Parabot-317-API-Minified-RoatzPK
+      branch:
+        - master
+        - development
+      jdk: 'openjdk7'
