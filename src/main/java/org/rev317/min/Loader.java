@@ -1,5 +1,6 @@
 package org.rev317.min;
 
+import java.awt.event.*;
 import org.parabot.core.Context;
 import org.parabot.core.Core;
 import org.parabot.core.Directories;
@@ -7,6 +8,10 @@ import org.parabot.core.asm.ASMClassLoader;
 import org.parabot.core.asm.adapters.AddInterfaceAdapter;
 import org.parabot.core.asm.hooks.HookFile;
 import org.parabot.core.desc.ServerProviderInfo;
+import org.parabot.core.reflect.RefClass;
+import org.parabot.core.reflect.RefField;
+import org.parabot.core.reflect.RefMethod;
+import org.parabot.core.ui.components.GamePanel;
 import org.parabot.core.ui.components.VerboseLoader;
 import org.parabot.environment.api.utils.WebUtil;
 import org.parabot.environment.scripts.Script;
@@ -19,7 +24,10 @@ import org.rev317.min.ui.BotMenu;
 
 import javax.swing.*;
 import java.applet.Applet;
+import java.awt.*;
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.net.URL;
 
 /**
@@ -39,7 +47,25 @@ public class Loader extends ServerProvider {
             final Context        context     = Context.getInstance();
             final ASMClassLoader classLoader = context.getASMClassLoader();
             final Class<?>       clientClass = classLoader.loadClass(Context.getInstance().getServerProviderInfo().getClientClass());
-            Object               instance    = clientClass.newInstance();
+
+            Object instance = clientClass.newInstance();
+
+            Field field = instance.getClass().getSuperclass().getDeclaredField("Y");
+            field.setAccessible(true);
+
+            Class<?>       frameClass    = classLoader.loadClass("com.b.a.E");
+            Constructor<?> s             = frameClass.getConstructors()[0];
+            s.setAccessible(true);
+            Frame         frameInstance = (Frame) s.newInstance(instance, 765, 503, false, false);
+
+            Field field2 = instance.getClass().getSuperclass().getDeclaredField("ai");
+
+            RefField x = new RefField(field2, instance);
+            x.setBoolean(true);
+
+            System.out.println(instance.getClass().getSuperclass().getDeclaredField("ai").get(instance));
+
+            field.set(instance, frameInstance);
 
             return (Applet) instance;
         } catch (Exception e) {
@@ -101,5 +127,43 @@ public class Loader extends ServerProvider {
 
     @Override
     public void init() {
+    }
+
+    @Override
+    public void preAppletInit() {
+
+    }
+
+    @Override
+    public void postAppletStart() {
+
+        GamePanel panel = GamePanel.getInstance();
+        Applet applet = (Applet) Context.getInstance().getClient();
+        try {
+            RefClass appletClass = new RefClass(Context.getInstance().getASMClassLoader().loadClass("com.b.a.B"), applet);
+            final RefField frameField = appletClass.getField("Y"); // frame
+            RefField graphicsField = appletClass.getField("X");
+            RefField useApplet = appletClass.getField("ai");
+            useApplet.setBoolean(true);
+           // System.out.println("check: "+useApplet.asBoolean());
+            Frame frame = (Frame) frameField.asObject();
+            frame.dispose();
+            frameField.set(null);
+            RefMethod componentMethod = appletClass.getMethod("o");
+            Component component = (Component) componentMethod.invoke();
+            //System.out.println("component: "+component);
+            panel.add(component);
+            applet.repaint();
+            applet.paintAll(applet.getGraphics());
+            graphicsField.set(applet.getGraphics());
+            component.addMouseListener((MouseListener)applet);
+            component.addMouseMotionListener((MouseMotionListener)applet);
+            component.addKeyListener((KeyListener)applet);
+            component.addFocusListener((FocusListener)applet);
+            component.addMouseWheelListener((MouseWheelListener)applet);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        panel.validate();
     }
 }
